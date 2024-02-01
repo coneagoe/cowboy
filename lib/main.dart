@@ -20,15 +20,12 @@ class MyApp extends StatelessWidget {
       routes: {
         '/': (context) => HomePage(),
         '/config': (context) => ConfigPage(),
-        '/register': (context) => RegisterPage(),
       },
     );
   }
 }
 
 class HomePage extends StatelessWidget {
-  final config = Config();
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -49,23 +46,6 @@ class HomePage extends StatelessWidget {
               title: Text('Config'),
               onTap: () {
                 Navigator.pushNamed(context, '/config');
-              },
-            ),
-            FutureBuilder<bool>(
-              future: config.isConfigured(),
-              builder: (BuildContext context, AsyncSnapshot<bool> snapshot) {
-                if (snapshot.connectionState == ConnectionState.done) {
-                  return ListTile(
-                    title: Text('Register/Unregister'),
-                    onTap: snapshot.data == true
-                        ? () {
-                            Navigator.pushNamed(context, '/register');
-                          }
-                        : null,
-                  );
-                } else {
-                  return CircularProgressIndicator();
-                }
               },
             ),
           ],

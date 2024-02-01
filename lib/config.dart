@@ -48,9 +48,19 @@ class _ConfigPageState extends State<ConfigPage> {
   @override
   void initState() {
     super.initState();
+    _loadConfig();
     serverIpController.addListener(_checkIfModified);
     serverPortController.addListener(_checkIfModified);
     proxyController.addListener(_checkIfModified);
+  }
+
+  void _loadConfig() async {
+    await config.load();
+    setState(() {
+      serverIpController.text = Config.serverIp ?? "";
+      serverPortController.text = Config.serverPort?.toString() ?? "";
+      proxyController.text = Config.proxy ?? "";
+    });
   }
 
   @override
